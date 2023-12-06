@@ -19,19 +19,42 @@ print(total)
 
 total = 0
 lineno = 0
-numbers = []
-words = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 for line in lines:
-    # for word in words:
-    #     results = [i for i in range(len(line)) if line.startswith(word, i)]
-    #     for result in results:
-    #         line = line[:result] + str(words.index(word)) + line[result+1:]
-    # lineno += 1
-    # print(lineno, firstandlast(line))
-    # total += firstandlast(line)
+    lineno += 1
+    numbers = []
     while len(line) > 0:
         if line[0].isdigit():
             numbers.append(line[0])
             line = line[1:]
-        elif line.startswith("one")
+        elif line.startswith("one"):
+            numbers.append("1")
+            line = line[1:]
+        elif line.startswith("two"):
+            numbers.append("2")
+            line = line[1:]
+        elif line.startswith("three"):
+            numbers.append("3")
+            line = line[1:]
+        elif line.startswith("four"):
+            numbers.append("4")
+            line = line[1:]
+        elif line.startswith("five"):
+            numbers.append("5")
+            line = line[1:]
+        elif line.startswith("six"):
+            numbers.append("6")
+            line = line[1:]
+        elif line.startswith("seven"):
+            numbers.append("7")
+            line = line[1:]
+        elif line.startswith("eight"):
+            numbers.append("8")
+            line = line[1:]
+        elif line.startswith("nine"):
+            numbers.append("9")
+            line = line[1:]
+        else:
+            line = line[1:]
+    total += firstandlast(numbers)
+assert total == 53539
 print(total)
