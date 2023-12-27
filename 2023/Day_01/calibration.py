@@ -1,4 +1,7 @@
 import sys
+import time
+
+start = time.time()
 
 def firstandlast(line):
     digits = []
@@ -58,3 +61,6 @@ for line in lines:
     total += firstandlast(numbers)
 assert total == 53539
 print(total)
+
+end = time.time()
+print("Elapsed time:", (end-start) * 10**3, "ms")
