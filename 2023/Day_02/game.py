@@ -1,4 +1,7 @@
 import sys
+import time
+
+start = time.time()
 
 lines = sys.stdin.readlines()
 lines = [line.rstrip() for line in lines]
@@ -39,3 +42,6 @@ for line in lines:
         if result:
             total += int(number)
 print(number)
+
+end = time.time()
+print("Elapsed time:", (end-start) * 10**3, "ms")
