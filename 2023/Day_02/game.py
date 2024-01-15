@@ -10,6 +10,7 @@ number = []
 total = 0
 
 for line in lines:
+    game_result = True
     games = []
     attempts = []
     line = line[4:]
@@ -26,22 +27,25 @@ for line in lines:
             pulls.append(cubes)
         attempts.append(pulls)
     for attempt in attempts:
-        result = False
-        red_result = False
-        green_result = False
-        blue_result = False
+        result = True
+        red_result = True
+        green_result = True
+        blue_result = True
         for pull in attempt:
-            print(f"Game: {number}, {pull}")
-            if pull[1] == 'red' and int(pull[0]) <= 12:
-                red_result = True
-            if pull[1] == 'green' and int(pull[0]) <= 13:
-                green_result = True
-            if pull[1] == 'blue' and int(pull[0]) <= 14:
-                blue_result = True
+            if pull[1] == 'red' and int(pull[0]) > 12:
+                red_result = False
+            if pull[1] == 'green' and int(pull[0]) > 13:
+                green_result = False
+            if pull[1] == 'blue' and int(pull[0]) > 14:
+                blue_result = False
         result = red_result and green_result and blue_result
-        if result:
-            total += int(number)
-print(total) #12080 is too high
+        #print(f"Attempt: {attempt} Result: {result}")
+        game_result = game_result and result
+    #print(f"Game result: {game_result}")
+    if game_result:
+        total += int(number)
+assert total == 2406
+print(f"Total: {total}") #2406 is correct
 
 end = time.time()
 print("Elapsed time:", (end-start) * 10**3, "ms")
