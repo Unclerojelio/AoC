@@ -31,7 +31,7 @@ for line in lines:
         green_result = False
         blue_result = False
         for pull in attempt:
-            print(pull)
+            print(f"Game: {number}, {pull}")
             if pull[1] == 'red' and int(pull[0]) <= 12:
                 red_result = True
             if pull[1] == 'green' and int(pull[0]) <= 13:
@@ -41,7 +41,7 @@ for line in lines:
         result = red_result and green_result and blue_result
         if result:
             total += int(number)
-print(number)
+print(total) #12080 is too high
 
 end = time.time()
 print("Elapsed time:", (end-start) * 10**3, "ms")
