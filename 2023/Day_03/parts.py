@@ -1,19 +1,36 @@
+#Thanks to HyperNeutrino on YouTube.
+
 import sys
 import time
-import re
 
 start = time.time()
 
-numbers = []
-
+cs = set()
 lines = sys.stdin.readlines()
-lines = [line.rstrip() for line in lines]
+grid = [line.rstrip() for line in lines]
 
-for line in lines:
-    numbers.append(re.findall(r'\d+', line))
+for r, row in enumerate(grid):
+    for c , ch in enumerate(row):
+        if ch.isdigit() or ch == ".":
+            continue
+        for cr in [r - 1, r, r + 1]:
+            for cc in [c - 1, c, c + 1]:
+                if cr < 0 or cr >= len(grid) or cc < 0 or cc >= len(grid[cr]) or not grid[cr][cc].isdigit():
+                    continue
+                while cc > 0 and grid[cr][cc - 1]. isdigit():
+                    cc -= 1
+                cs.add((cr, cc))
+                
+ns = []
+for r, c in cs:
+    s = ""
+    while c < len(grid[r]) and grid[r][c].isdigit():
+        s += grid[r][c]
+        c  += 1
+    ns.append(int(s))
+ans1 = sum(ns)
+assert ans1 == 507214
+print(f"The answer to Part 1 is: {ans1}.")
 
-print(f"All the numbers: {numbers}")
-
-print(f"Total lines of input: {len(lines)}.")
 end = time.time()
 print("Elapsed time:", (end-start) * 10**3, "ms")
