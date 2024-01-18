@@ -49,18 +49,17 @@ for r, row in enumerate(grid):
 
         if len(cs) != 2:
             continue
-        print(cs)
         ns = []
-        for r, c in cs:
+        for cr, cc in cs:
             s = ""
-            while c < len(grid[r]) and grid[r][c].isdigit():
-                s += grid[r][c]
-                c  += 1
+            while cc < len(grid[cr]) and grid[cr][cc].isdigit():
+                s += grid[cr][cc]
+                cc  += 1
             ns.append(int(s))
-        print(f"ns0: {ns[0]} ns1: {ns[1]}")
         ans2 += ns[0] * ns[1]
+assert ans2 == 72553319
 
-print(f"The answer to Part 1 is: {ans1} The answer to Part 2 is: {ans2}.")#for part 2, 39763887 is too low.
+print(f"The answer to Part 1 is: {ans1} The answer to Part 2 is: {ans2}.")
 
 end = time.time()
 print("Elapsed time:", (end-start) * 10**3, "ms")
