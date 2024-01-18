@@ -1,3 +1,5 @@
+# Thanks to HyperNeutrino on YouTube
+
 import time
 
 start = time.time()
@@ -22,16 +24,21 @@ for line in lines:
 
     cards.append([card_num, winners, choices, 1])
 
-ans2 = 0
-for card in cards:
+m = {}
+for i, card in enumerate(cards):
+    if i not in m:
+        m[i] = 1
     for _ in range(card[3]):
         count = 0
         for choice in card[2]:
             if choice in card[1]:
                 count += 1
-        for index in range(count):
-            cards[card[0] + index][3] += 1
-    ans2 += card[3]
+    for index in range(i + 1, i + count + 1):
+        m[index] = m.get(index, 1) + m[i]
+
+ans2 = 0
+for i in range(len(m)):
+    ans2 += m[i]
 
 assert sum == 24160
 assert ans2 == 5659035
