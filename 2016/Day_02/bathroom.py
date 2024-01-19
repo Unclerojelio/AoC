@@ -15,20 +15,20 @@ keypad = ["123",
           "456",
           "789"]
           
-keypad2 = [['0', '0', '0', '0', '0', '0', '0'],
-           ['0', '0', '0', '1', '0', '0', '0'],
-           ['0', '0', '2', '3', '4', '0', '0'],
-           ['0', '5', '6', '7', '8', '9', '0'],
-           ['0', '0', 'A', 'B', 'C', '0', '0'],
-           ['0', '0', '0', 'D', '0', '0', '0'],
-           ['0', '0', '0', '0', '0', '0', '0']]
+keypad2 = [[0, 0,  0,   0,   0,  0, 0],
+           [0, 0,  0,   1,   0,  0, 0],
+           [0, 0,  2,   3,   4,  0, 0],
+           [0, 5,  6,   7,   8,  9, 0],
+           [0, 0, 'A', 'B', 'C', 0, 0],
+           [0, 0,  0,  'D',  0,  0, 0],
+           [0, 0,  0,   0,   0,  0, 0]]
 
 lines = [line.rstrip() for line in lines]
 
 x = 1
 y = 1
 start = keypad[y][x]
-output = ''
+ans1 = ''
 
 for line in lines:
     for move in line:
@@ -52,7 +52,36 @@ for line in lines:
             if x > 2:
                 x = 2
                 
-    #print(keypad[y][x])
-    output += keypad[y][x]
-print(output)
+    ans1 += keypad[y][x]
+assert ans1 == '35749'
+print(ans1)
+
+x = 1
+y = 3
+ans2 = ''
+for line in lines:
+    for move in line:
+        if move == 'U':
+            y -= 1
+            if keypad2[y][x] == 0:
+                y +=1
+                
+        elif move == 'D':
+            y += 1
+            if keypad2[y][x] == 0:
+                y -=1
+                
+        elif move == 'L':
+            x -= 1
+            if keypad2[y][x] == 0:
+                x += 1
+                
+        elif move == 'R':
+            x += 1
+            if keypad2[y][x] == 0:
+                x -= 1
+                
+    ans2 += str(keypad2[y][x])
+assert ans2 == '9365C'
+print(ans2)
                 
