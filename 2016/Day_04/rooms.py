@@ -22,7 +22,7 @@ for line in lines:
         else:
             letters[letter] = 1
 
-    sorted_letters = dict(reversed(sorted(letters.items(), key=lambda item: item[1])))
+    sorted_letters = dict(sorted(letters.items(), key=lambda item: (-item[1], item[0])))
     letters = ""
     for letter in sorted_letters:
         letters += letter
