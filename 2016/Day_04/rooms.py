@@ -4,6 +4,7 @@ start = time.time()
 
 lines = open(0).read().splitlines()
 ans1 = 0
+rooms = []
 for line in lines:
     name = ""
     first = line.split('-')
@@ -29,7 +30,20 @@ for line in lines:
 
     if letters[:5] == checksum:
         ans1 += int(sector)
+    rooms.append((name, int(sector)))
+assert ans1 == 278221
 print(ans1)
+names = []
+for room, sector in rooms:
+    name = ""
+    for c in room:
+        name = name + chr((ord(c) - 97 + sector)%26 + 97)
+    names.append(name)
+    x = name.find('north')
+    if x != -1:
+        ans2 = sector
+assert ans2 == 267
+print(ans2)
 
 
 end = time.time()
