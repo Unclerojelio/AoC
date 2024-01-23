@@ -17,9 +17,10 @@ lines = "cxdnnyjw"
 def test():
     lines = "abc"
     if solve(lines) == "18f47a30":
-        print("test passed")
+        print(f"{bcolors.OKGREEN}Test passed{bcolors.ENDC}")
         return True
     else:
+        print(f"{bcolors.FAIL}Test failed.{bcolors.ENDC}")
         return False
 
 def solve(lines):
@@ -37,9 +38,9 @@ def main():
 
     if test():
         #lines = open(0).read().splitlines()
-        print(solve(lines))
-    else:
-        print(f"{bcolors.FAIL}Tests failed.{bcolors.ENDC}")
+        ans1 = solve(lines)
+        assert ans1 == "f77a0e6e"
+        print(f"Answer 1: {ans1}")
 
     end = time.time()
     print("Elapsed time:", (end-start) * 10**3, "ms")
