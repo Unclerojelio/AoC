@@ -1,7 +1,6 @@
 import re
 
 f = open("input.txt", "r")
-#lines = f.readlines()
 lines = [line.rstrip() for line in f.readlines()]
 
 #Part 1 test set
@@ -9,8 +8,6 @@ lines = [line.rstrip() for line in f.readlines()]
 
 #Part 2 test set
 #lines = ['aaaa', 'qjhvhtzxzqqjkmpb', 'xxyxx', 'uurcxstgmygtbstg', 'ieodomkazucvgmuy']
-
-#doubles = ['aa', 'bb', 'cc', 'dd', 'ee', 'ff', 'gg', 'hh', 'ii', 'jj', 'kk', 'll', 'mm', 'nn', 'oo','pp','qq', 'rr', 'ss', 'tt', 'uu', 'vv', 'ww', 'xx', 'yy', 'zz']
 
 def has_bad_words(line):
     bad_words = ["ab", "cd", "pq", "xy"]
