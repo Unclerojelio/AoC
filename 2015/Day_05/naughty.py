@@ -4,9 +4,13 @@ f = open("input.txt", "r")
 #lines = f.readlines()
 lines = [line.rstrip() for line in f.readlines()]
 
+#Part 1 test set
 #lines = ['ugknbfddgicrmopn', 'aaa', 'jchzalrnumimnmhp', 'haegwjzuvuyypxyu', 'dvszwmarrgswjxmb']
 
-doubles = ['aa', 'bb', 'cc', 'dd', 'ee', 'ff', 'gg', 'hh', 'ii', 'jj', 'kk', 'll', 'mm', 'nn', 'oo','pp','qq', 'rr', 'ss', 'tt', 'uu', 'vv', 'ww', 'xx', 'yy', 'zz']
+#Part 2 test set
+#lines = ['aaaa', 'qjhvhtzxzqqjkmpb', 'xxyxx', 'uurcxstgmygtbstg', 'ieodomkazucvgmuy']
+
+#doubles = ['aa', 'bb', 'cc', 'dd', 'ee', 'ff', 'gg', 'hh', 'ii', 'jj', 'kk', 'll', 'mm', 'nn', 'oo','pp','qq', 'rr', 'ss', 'tt', 'uu', 'vv', 'ww', 'xx', 'yy', 'zz']
 
 def has_bad_words(line):
     bad_words = ["ab", "cd", "pq", "xy"]
@@ -30,6 +34,7 @@ def has_vowels(line):
     return False
 
 def has_doubles(line):
+    doubles = ['aa', 'bb', 'cc', 'dd', 'ee', 'ff', 'gg', 'hh', 'ii', 'jj', 'kk', 'll', 'mm', 'nn', 'oo','pp','qq', 'rr', 'ss', 'tt', 'uu', 'vv', 'ww', 'xx', 'yy', 'zz']
     for double in doubles:
         if double in line:
             #print(f"This line has a double:  {line}")
@@ -37,38 +42,23 @@ def has_doubles(line):
     #print(f"This line does not have a double:  {line}")
     return False
 
-nice_list = []
-for line in lines:
-    if not has_bad_words(line) and has_vowels(line) and has_doubles(line):
-        nice_list.append(line)
-        #print(line)
-assert len(nice_list) == 238
-print(len(nice_list))
-
-lines = ['aaaa', 'qjhvhtzxzqqjkmpb', 'xxyxx', 'uurcxstgmygtbstg', 'ieodomkazucvgmuy']
-
 def appears_twice(line):
-    print(f"Received by twice: {line}")
     if len(line) < 4:
         return False
     while len(line) >= 4:
         l1 = line[0]
         l2 = line[1]
         line = line[1:]
-        if line.find(''.join([l1, l2])) > 0:
+        if line.find(''.join([l1, l2]), 1) > 0:
             #print(''.join([l1, l2]))
             return True
-        #line = line[1:]
     return False
 
 def two_separated_letters(line):
-    print(f"Received by separated: {line}")
     if len(line) < 3:
         return False
     while len(line) >= 3:
         letters = line[:3]
-        #print(letters)
-        #print(line)
         letter1 = letters[0]
         letter2 = letters[1]
         letter3 = letters[2]
@@ -78,14 +68,18 @@ def two_separated_letters(line):
         line = line[1:]
     return False
 
-count = 0
+ans1 = 0
+ans2 = 0
 for line in lines:
+    if not has_bad_words(line) and has_vowels(line) and has_doubles(line):
+        ans1 += 1
     if appears_twice(line) and two_separated_letters(line):
-        print(line, "Nice")
-        count += 1
-    else:
-        print(line, "Naughty")
+        #print(line, "Nice")
+        ans2 += 1
+    # else:
+    #     print(line, "Naughty")
 
-#assert count == 2
-#28 is too low, not 41, not 46, not 51
-print(count)
+#assert count == 3
+assert ans2 == 69
+assert ans1 == 238
+print(f"Part 1 answer: {ans1} Part 2 answer: {ans2}")
