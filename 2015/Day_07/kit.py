@@ -3,35 +3,23 @@ import time
 wires = {}
 
 def evaluate(wire):
-    print(wire)
-    if len(wire) == 1:
-        if wire[0].isdigit():
-            return int(wire[0])
-        else:
-            return evaluate(wires[wire[0]])
-    elif len(wire) == 2:
-        return evaluate(wires[wire[1]]) ^ 0b1111111111111111
-    elif len(wire) == 3:
-        if wire[1] == "RSHIFT":
-            return evaluate(wires[wire[0]]) >> evaluate([wire[2]])
-        elif wire[1] == "LSHIFT":
-            return evaluate(wires[wire[0]]) << evaluate([wire[2]])
-        elif wire[1] == "AND":
-            if wire[0].isdigit():
-                return evaluate(wire[0]) & evaluate(wires[wire[2]])
-            elif wire[2].isdigit():
-                return evaluate(wires[wire[0]]) & evaluate(wire[2])
-            else:
-                return evaluate(wires[wire[0]]) & evaluate(wires[wire[2]])
-        elif wire[1] == "OR":
-            if wire[0].isdigit():
-                return evaluate(wire[0]) | evaluate(wires[wire[2]])
-            elif wire[2].isdigit():
-                return evaluate(wires[wire[0]]) | evaluate(wire[2])
-            else:
-                return evaluate(wires[wire[0]]) | evaluate(wires[wire[2]])
-        else:
-            print(f"Unexpected line: {wire}")
+    #print(wire)
+    if wire[0].isdigit():
+        print(int(wire[0]))
+        return int(wire[0])
+    elif 'NOT' in  wire:
+        evaluate(wire[1]) ^ 0b1111111111111111
+    elif 'RSHIFT' in wire:
+        evaluate(wire[0]) >> int(wire[2])
+    elif 'LSHIFT' in wire:
+        evaluate(wire[0]) << int(wire[2])
+    elif 'AND' in wire:
+        #print(wire[0], wire[2])
+        evaluate(wire[0]) & evaluate(wire[2])
+    elif 'OR' in wire:
+        evaluate(wire[0]) | evaluate(wire[2])
+    else:
+        return wire[0]
 
 
 start_time = time.time()
@@ -50,9 +38,9 @@ j -> x'''
 lines = lines.splitlines()
 
 for line in lines:
-    #print(line)
-    tokens = line.split()
-    wires[tokens[-1:][0]] = tokens[:-2]
+    v, k = line.split(' -> ')
+    wires[k] = v.split()
+    #print(k, wires[k])
 
 wires['d'] = evaluate(wires['d'])
 wires['e'] = evaluate(wires['e'])
