@@ -41,8 +41,11 @@ for line in lines:
     v, k = line.split(' -> ')
     wires[k] = v.split()  
 
-wires['a'] = evaluate('a')
-assert wires['a'] == 46065
-print(wires['a'])
-#part 2 14134
+ans1 = evaluate('a')
+assert ans1 == 46065
+mem = {}
+wires['b'] = ['46065']
+ans2 = evaluate('a')
+assert ans2 == 14134
+print(f"Answer 1: {ans1} Answer 2: {ans2}")
 print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
