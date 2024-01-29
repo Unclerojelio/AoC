@@ -17,5 +17,7 @@ def solve(input):
 
 for _ in range(40):
     output = solve(input)
-    print(len(output))
     input = output
+ans1 = len(output)
+assert ans1 == 360154
+print(ans1)
