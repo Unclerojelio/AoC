@@ -7,7 +7,8 @@ def getNumbers(line):
 
 start_time = time.time()
 ans1 = 0
-lines = open(0).read().split(',')
+json_doc = open(0).read()
+lines = json_doc.split(',')
 for line in lines:
     ans1 += sum([int(i) for i in getNumbers(line)])
 # line = r'{"a":2"b":4}'
@@ -18,5 +19,23 @@ for line in lines:
 #ans1 = sum([int(i) for i in getNumbers(line)])
 assert ans1 == 111754
 print(ans1)
+
+stack = []
+for ch in json_doc:
+    print(stack)
+    if ch == '[' or ch == '{':
+        stack.append(ch)
+    elif ch == ']' or ch == '}':
+        if len(stack) == 0:
+            print("False")
+        elif ch == stack[-1]:
+            stack.pop()
+if len(stack) == 0:
+    print("True")
+else:
+    print("False")
+    
+    
+
 
 print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
