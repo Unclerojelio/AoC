@@ -1,6 +1,7 @@
 import time
 import re
-    
+from itertools import permutations
+
 def do_tests():
     return True
 
@@ -8,7 +9,8 @@ def main():
     start_time = time.time()
 
     lines = open(0).read().splitlines()
-    guests = []
+    pairs = {}
+    guests = set()
     for line in lines:
         guest = []
         line = line[:-1]
@@ -16,11 +18,19 @@ def main():
         sign = -1
         if line[2] == 'gain':
             sign = 1
-        value = int(line[3]) * sign
-        guest = [line[0], value, line[10]]
-        guests.append(guest)
-    for guest in guests:
-        print(guest)
+        guests.add(line[0])
+        pairs[(line[0], line[10])] = int(line[3]) * sign
+
+    ans1 = 0
+    positions = permutations(guests)
+    for position in positions:
+        happiness = 0
+        for i in range(len(position)):
+            happiness += pairs[position[i], position[(i+1) % len(position)]]
+            happiness += pairs[position[i], position[(i-1) % len(position)]]
+        ans1 = max(ans1, happiness)
+    print(ans1)
+
 
     if do_tests():
         print("Tests Passed")
