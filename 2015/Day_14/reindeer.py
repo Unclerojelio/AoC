@@ -17,9 +17,18 @@ def parse_file():
 
 
 def solve(reindeers):
-    for reindeer in reindeers:
-        print(reindeer, reindeers[reindeer])
     ans1 = 0
+    race_time = 2503
+    for reindeer in reindeers:
+        speed = int(reindeers[reindeer][0])
+        stamina = int(reindeers[reindeer][1])
+        rest = int(reindeers[reindeer][2])
+        period = stamina + rest
+        cycles = race_time // period
+        distance = cycles * speed
+        distance += speed * min((race_time % period), stamina)
+        print(reindeer, period, cycles, distance)
+        ans1 = max(ans1, distance)
     return ans1
 
 def main():
@@ -36,6 +45,7 @@ def main():
     reindeer = parse_file()
     ans1 = solve(reindeer)
     
+    #882 is too low
     # assert ans1 == 709
     # assert ans2 == 668
     print("Answer 1:", ans1, "Answer 2: ", ans2)
