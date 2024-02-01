@@ -17,7 +17,9 @@ David would lose 7 happiness units by sitting next to Bob.
 David would gain 41 happiness units by sitting next to Carol.'''
 
     lines = lines.splitlines()
-    assert solve(lines) == 330
+    ans1, ans2 = solve(lines)
+    assert ans1 == 330
+    assert ans2 == 286
     return True
 
 def solve(lines):
@@ -42,7 +44,21 @@ def solve(lines):
             happiness += pairs[position[i], position[(i-1) % len(position)]]
         ans1 = max(ans1, happiness)
 
-    return ans1
+    for guest in guests:
+        pairs[(guest, 'Me')] = 0
+        pairs[('Me', guest)] = 0
+
+    guests.add('Me')
+    ans2 = 0
+    positions = permutations(guests)
+    for position in positions:
+        happiness = 0
+        for i in range(len(position)):
+            happiness += pairs[position[i], position[(i+1) % len(position)]]
+            happiness += pairs[position[i], position[(i-1) % len(position)]]
+        ans2 = max(ans2, happiness)
+    return ans1, ans2
+
 
 def main():
     start_time = time.time()
@@ -51,11 +67,10 @@ def main():
         print("Tests Passed")
 
     lines = open(0).read().splitlines()
-    ans1 = solve(lines)
+    ans1, ans2 = solve(lines)
     
     assert ans1 == 709
-    ans2 = 0
-    #assert ans2 == 65402
+    assert ans2 == 668
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
