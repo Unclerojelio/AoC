@@ -48,7 +48,7 @@ def solve(reindeers, race_time):
                         resting = False
                         reindeers[reindeer][6] = 0
     for reindeer in reindeers:
-        print(reindeers[reindeer][0], reindeers[reindeer][3])
+        print(reindeer, reindeers[reindeer][3])
 
     return ans1, ans2
 
