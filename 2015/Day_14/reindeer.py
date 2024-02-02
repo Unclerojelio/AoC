@@ -40,12 +40,12 @@ def solve(reindeers, race_time):
                     reindeers[reindeer][3] += speed
                     reindeers[reindeer][5] += 1
                     if reindeers[reindeer][1] == reindeers[reindeer][5]:
-                        resting = True
+                        reindeers[reindeer][7] = True
                         reindeers[reindeer][5] = 0
                 else:
                     reindeers[reindeer][6] += 1
                     if reindeers[reindeer][2] == reindeers[reindeer][6]:
-                        resting = False
+                        reindeers[reindeer][7] = False
                         reindeers[reindeer][6] = 0
     for reindeer in reindeers:
         print(reindeer, reindeers[reindeer][3])
