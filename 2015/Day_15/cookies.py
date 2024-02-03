@@ -27,7 +27,8 @@ def do_tests():
 Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3'''
     lines = lines.splitlines()
     ingredients = parse_file(lines)
-    ans1, ans2 = solve(ingredients)
+    partitions = [(44, 56)]
+    ans1, ans2 = solve(ingredients, partitions)
 
     assert ans1 == 62842880
     return True
@@ -46,10 +47,8 @@ def parse_file(lines):
     return ingredients
 
 
-def solve(ingredients):
+def solve(ingredients, partitions):
     ans1 = 0
-    k = len(ingredients)
-    partitions = get_partitions(100, k)
     for partition in partitions:
         score = get_score(ingredients, partition)
         ans1 = max(ans1, score)
@@ -67,7 +66,8 @@ def main():
 
     lines = open(0).read().splitlines()
     ingredients = parse_file(lines)
-    ans1, ans2 = solve(ingredients)
+    partitions = get_partitions(100, len(ingredients))
+    ans1, ans2 = solve(ingredients, partitions)
     
     # assert ans1 == 2660
     # assert ans2 == 1256
