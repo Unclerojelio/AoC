@@ -23,7 +23,6 @@ def parse_file(lines):
 
 def solve(reindeers, race_time):
     ans1 = 0
-    ans2 = 0
     for reindeer in reindeers:
         speed = int(reindeers[reindeer][0])
         stamina = int(reindeers[reindeer][1])
@@ -34,21 +33,28 @@ def solve(reindeers, race_time):
         distance += speed * min((race_time % period), stamina)
         ans1 = max(ans1, distance)
 
-        for second in range(race_time):
-            for reindeer in reindeers:
-                if not reindeers[reindeer][7]:  #resting
-                    reindeers[reindeer][3] += speed
-                    reindeers[reindeer][5] += 1
-                    if reindeers[reindeer][1] == reindeers[reindeer][5]:
-                        reindeers[reindeer][7] = True
-                        reindeers[reindeer][5] = 0
-                else:
-                    reindeers[reindeer][6] += 1
-                    if reindeers[reindeer][2] == reindeers[reindeer][6]:
-                        reindeers[reindeer][7] = False
-                        reindeers[reindeer][6] = 0
+    for second in range(race_time):
+        distances = []
+        for reindeer in reindeers:
+            if not reindeers[reindeer][7]:  #resting
+                reindeers[reindeer][3] += int(reindeers[reindeer][0])
+                reindeers[reindeer][5] += 1
+                if int(reindeers[reindeer][1]) == reindeers[reindeer][5]:
+                    reindeers[reindeer][7] = True
+                    reindeers[reindeer][5] = 0
+            else:
+                reindeers[reindeer][6] += 1
+                if int(reindeers[reindeer][2]) == reindeers[reindeer][6]:
+                    reindeers[reindeer][7] = False
+                    reindeers[reindeer][6] = 0
+            distances.append(reindeers[reindeer][3])
+        farthest = max(distances)
+        for reindeer in reindeers:
+            if reindeers[reindeer][3] == farthest:
+                reindeers[reindeer][4] += 1
+    ans2 = 0
     for reindeer in reindeers:
-        print(reindeer, reindeers[reindeer][3])
+        ans2 = max(ans2, reindeers[reindeer][4])
 
     return ans1, ans2
 
@@ -64,6 +70,7 @@ def main():
     ans1, ans2 = solve(reindeer, race_time)
     
     assert ans1 == 2660
+    assert ans2 == 1256
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
