@@ -2,6 +2,26 @@ import time
 import re
 from itertools import permutations
 
+def get_partitions(n, k):
+    return [(44, 56)]
+
+def get_score(ingredients, partition):
+    table = []
+    for i, ingredient in enumerate(ingredients):
+        sums = []
+        for property in ingredients[ingredient]:    
+            sums.append(property * partition[i])
+        table.append(sums)
+    score = 1
+    for j in range(len(table[0])-1): # properties
+        temp = 0
+        for i in range(len(table)): # ingredients
+            temp += table[i][j]
+        temp = max(temp, 0)
+        score *= temp
+    return score
+
+
 def do_tests():
     lines = '''Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8
 Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3'''
@@ -9,7 +29,7 @@ Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3'''
     ingredients = parse_file(lines)
     ans1, ans2 = solve(ingredients)
 
-    #assert ans1 == 62842880
+    assert ans1 == 62842880
     return True
 
 def parse_file(lines):
@@ -27,9 +47,14 @@ def parse_file(lines):
 
 
 def solve(ingredients):
-    for ingredient in ingredients:
-        print(ingredient, ingredients[ingredient])
     ans1 = 0
+    k = len(ingredients)
+    partitions = get_partitions(100, k)
+    for partition in partitions:
+        score = get_score(ingredients, partition)
+        ans1 = max(ans1, score)
+    
+    ans1 = score
     ans2 = 0
 
     return ans1, ans2
