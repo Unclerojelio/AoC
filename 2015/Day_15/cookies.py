@@ -15,14 +15,22 @@ Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3'''
 def parse_file(lines):
     ingredients = {}
     for line in lines:
-        line = line.split()
+        name, line = line.split(':')
+        capacity, durability, flavor, texture, calories = line.split(',')
+        _, capacity = capacity.split()
+        _, durability = durability.split()
+        _, flavor = flavor.split()
+        _, texture = texture.split()
+        _, calories = calories.split()
+        ingredients[name] = [int(capacity), int(durability), int(flavor), int(texture), int(calories)]
     return ingredients
 
 
 def solve(ingredients):
+    for ingredient in ingredients:
+        print(ingredient, ingredients[ingredient])
     ans1 = 0
     ans2 = 0
-
 
     return ans1, ans2
 
@@ -35,7 +43,6 @@ def main():
     lines = open(0).read().splitlines()
     ingredients = parse_file(lines)
     ans1, ans2 = solve(ingredients)
-
     
     # assert ans1 == 2660
     # assert ans2 == 1256
