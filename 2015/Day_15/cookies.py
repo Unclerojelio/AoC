@@ -16,9 +16,12 @@ def partitionfunc(n,k,l=1):
 
 def get_partitions(n, k):
     partitions = set()
+    count = 0
     for partition in partitionfunc(n, k):
+        count += 1
         for p in permutations(partition):
             partitions.add(p)
+    #print(count, len(partitions))
     return partitions
 
 def get_score(ingredients, partition):
@@ -33,8 +36,7 @@ def get_score(ingredients, partition):
         temp = 0
         for i in range(len(table)): # ingredients
             temp += table[i][j]
-        temp = max(temp, 0)
-        score *= temp
+        score *= max(temp, 0)
     return score
 
 
@@ -68,8 +70,7 @@ def solve(ingredients, partitions):
     for partition in partitions:
         score = get_score(ingredients, partition)
         ans1 = max(ans1, score)
-    
-    ans1 = score
+
     ans2 = 0
 
     return ans1, ans2
@@ -85,7 +86,7 @@ def main():
     partitions = get_partitions(100, len(ingredients))
     ans1, ans2 = solve(ingredients, partitions)
     
-    # assert ans1 == 2660
+    assert ans1 == 18965440
     # assert ans2 == 1256
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
