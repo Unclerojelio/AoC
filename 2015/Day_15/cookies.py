@@ -21,10 +21,9 @@ def get_partitions(n, k):
         count += 1
         for p in permutations(partition):
             partitions.add(p)
-    #print(count, len(partitions))
     return partitions
 
-def get_score(ingredients, partition):
+def get_score(ingredients, partition, calories_500):
     table = []
     for i, ingredient in enumerate(ingredients):
         sums = []
@@ -34,9 +33,13 @@ def get_score(ingredients, partition):
     score = 1
     for j in range(len(table[0])-1): # properties
         temp = 0
+        calories = 0
         for i in range(len(table)): # ingredients
             temp += table[i][j]
+            calories += table[i][len(table[0])-1]
         score *= max(temp, 0)
+        if calories_500 and calories != 500:
+            score = 0
     return score
 
 
@@ -46,9 +49,12 @@ Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3'''
     lines = lines.splitlines()
     ingredients = parse_file(lines)
     partitions = [(44, 56)]
-    ans1, ans2 = solve(ingredients, partitions)
+    ans1 = solve(ingredients, partitions, False)
+    partitions = [(40, 60)]
+    ans2 = solve(ingredients, partitions, True)
 
     assert ans1 == 62842880
+    assert ans2 == 57600000
     return True
 
 def parse_file(lines):
@@ -65,15 +71,13 @@ def parse_file(lines):
     return ingredients
 
 
-def solve(ingredients, partitions):
+def solve(ingredients, partitions, calories_500):
     ans1 = 0
     for partition in partitions:
-        score = get_score(ingredients, partition)
+        score = get_score(ingredients, partition, calories_500)
         ans1 = max(ans1, score)
 
-    ans2 = 0
-
-    return ans1, ans2
+    return ans1
 
 def main():
     start_time = time.time()
@@ -84,7 +88,8 @@ def main():
     lines = open(0).read().splitlines()
     ingredients = parse_file(lines)
     partitions = get_partitions(100, len(ingredients))
-    ans1, ans2 = solve(ingredients, partitions)
+    ans1 = solve(ingredients, partitions, False)
+    ans2 = solve(ingredients, partitions, True)
     
     assert ans1 == 18965440
     # assert ans2 == 1256
