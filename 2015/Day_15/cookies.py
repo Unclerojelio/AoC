@@ -92,7 +92,7 @@ def main():
     ans2 = solve(ingredients, partitions, True)
     
     assert ans1 == 18965440
-    # assert ans2 == 1256
+    assert ans2 == 15862900
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
