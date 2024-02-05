@@ -9,11 +9,18 @@ def parse_file(lines):
 
 def solve(containers, amount):
     ans1 = 0
-    for r in range(1, len(containers) +1):
+    count = len(containers) + 1
+    for r in range(1, len(containers) + 1):
         for z in combinations(containers, r):
-            ans1 += sum(z) == amount
+            if sum(z) == amount:
+                count = min(count, r)
+                ans1 += 1
 
     ans2 = 0
+    for z in combinations(containers, count):
+        if sum(z) == amount:
+            ans2 += 1
+
     return ans1, ans2
 
 def do_tests():
@@ -25,10 +32,9 @@ def do_tests():
     lines = lines.splitlines()
     containers = parse_file(lines)
     ans1, ans2 = solve(containers, 25)
-    #ans2 = solve(ingredients, partitions, True)
 
     assert ans1 == 4
-    # assert ans2 == 57600000
+    assert ans2 == 3
     return True
 
 def main():
