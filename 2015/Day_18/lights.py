@@ -2,7 +2,6 @@ import time
 import re
 from itertools import combinations
 
-
 def parse_file(lines):
     grid = []
     for line in lines:
@@ -20,10 +19,37 @@ def get_next(grid):
     for y in range(len(grid)):
         new_row = []
         for x in range(len(grid[y])):
-            if grid[y][x] == 1:
-                new_row.append(0)
+            neighbors = 0
+            if x == 0 and y == 0:
+                continue
+            elif x == len(grid[0]) and y == 0:
+                continue
+            elif x == len(grid[0]) and y == len(grid):
+                continue
+            elif x == 0 and y == len(grid):
+                continue
+            elif y == 0:
+                continue
+            elif x == len(grid[0]):
+                continue
+            elif y == len(grid):
+                continue
+            elif x == 0:
+                continue
             else:
-                new_row.append(1)
+                continue
+
+
+            if grid[y][x] == 1
+                if neighbors == 2 or neighbors == 3:
+                    new_row.append(1)
+                else:
+                    new_row.append(0)
+            if grid[y][x] == 0:
+                if neighbors == 3:
+                    new_row.append(1)
+                else:
+                    new_row.append(0)
         next_grid.append(new_row)
     return next_grid
 
