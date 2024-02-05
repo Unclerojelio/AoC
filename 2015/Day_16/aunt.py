@@ -28,7 +28,22 @@ def solve(aunts):
                 count += 1
             if count == 3:
                 ans1 = int(aunt['Number'])
-    ans2 = 0
+
+    for aunt in aunts:
+        count = 0
+        for key in aunt_sue.keys():
+            if key == 'cats' and key in aunt.keys() and aunt_sue[key] < aunt[key]:
+                count += 1
+            elif key == 'trees' and key in aunt.keys() and aunt_sue[key] < aunt[key]:
+                count += 1   
+            elif key == 'goldfish' and key in aunt.keys() and aunt_sue[key] > aunt[key]:
+                count += 1 
+            elif key == 'pomeranians' and key in aunt.keys() and aunt_sue[key] > aunt[key]:
+                count += 1  
+            elif key in aunt.keys() and aunt_sue[key] == aunt[key]:
+                count += 1  
+            if count == 3:
+                ans2 = int(aunt['Number'])
     return ans1, ans2
 
 def main():
@@ -37,7 +52,7 @@ def main():
     ans1, ans2 = solve(aunts)
     
     assert ans1 == 103
-    # assert ans2 == 15862900
+    assert ans2 == 405
     print("Answer 1:", ans1, "Answer 2: ", ans2)
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
 
