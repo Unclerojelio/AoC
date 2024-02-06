@@ -52,14 +52,32 @@ def get_next(grid):
         next_grid.append(new_row)
     return next_grid
 
-def solve(grid, steps):
-    for i in range(1, steps):
+def solve(grid, steps, stuck):
+    if stuck:
+        grid[0][0] = 1
+        grid[0][len(grid[0])-1] = 1
+        grid[len(grid)-1][len(grid[0])-1] = 1
+        grid[len(grid)-1][0] = 1
+
+    # print(f'Initial State')
+    # for row in grid:
+    #     print(row)
+    # print()
+
+    for i in range(1, steps+1):
         grid = get_next(grid)
+        if stuck:
+            grid[0][0] = 1
+            grid[0][len(grid[0])-1] = 1
+            grid[len(grid)-1][len(grid[0])-1] = 1
+            grid[len(grid)-1][0] = 1
+        # print(f'After {i} steps')
+        # for row in grid:
+        #     print(row)
+        # print()
 
-    ans1 = sum([sum(row) for row in grid])
-    ans2 = 0
-
-    return ans1, ans2
+    answer = sum([sum(row) for row in grid])
+    return answer
 
 def do_tests():
     lines = '''.#.#.#
@@ -70,10 +88,11 @@ def do_tests():
 ####..'''
     lines = lines.splitlines()
     grid = parse_file(lines)
-    ans1, ans2 = solve(grid, 5)
+    ans1 = solve(grid, 4, False)
+    ans2 = solve(grid, 5, True)
 
     assert ans1 == 4
-    # assert ans2 == 3
+    assert ans2 == 17
     return True
 
 def main():
@@ -83,10 +102,11 @@ def main():
         print("Tests Passed")
 
     grid = parse_file(open(0).read().splitlines())
-    ans1, ans2 = solve(grid, 101)
+    ans1 = solve(grid, 100, False)
+    ans2 = solve(grid, 100, True)
     
     assert ans1 == 814
-    # assert ans2 == 
+    assert ans2 == 924
     print("Answer 1:", ans1, "Answer 2: ", ans2)
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
 
