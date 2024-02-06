@@ -15,6 +15,11 @@ def parse_file(lines):
 
 def solve(replacements, starting_molecule):
     molecules = set()
+    for replacement in replacements:
+        positions = [i.start() for i in re.finditer(replacement[0], starting_molecule)]
+        for position in positions:
+            # replace replacement[1] at position and add to molecules
+            pass
     answer = len(molecules)
     return answer
 
@@ -40,13 +45,14 @@ def main():
         print("Tests Passed")
 
     replacements, starting_molecule = parse_file(open(0).read().splitlines())
-    print(replacements)
-    ans1 = solve(replacements, starting_molecule)
+    #print(replacements)
+    #ans1 = solve(replacements, starting_molecule)
     #ans2 = solve()
 
+    ans1 = 0
     ans2 = 0
     assert ans1 == 0
-    # assert ans2 == 
+    assert ans2 == 0 
     print("Answer 1:", ans1, "Answer 2: ", ans2)
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
 
