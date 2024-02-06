@@ -21,26 +21,25 @@ def get_next(grid):
         for x in range(len(grid[y])):
             neighbors = 0
             if x == 0 and y == 0:
-                continue
-            elif x == len(grid[0]) and y == 0:
-                continue
-            elif x == len(grid[0]) and y == len(grid):
-                continue
-            elif x == 0 and y == len(grid):
-                continue
+                neighbors = grid[0][1] + grid[1][1] + grid[1][0]
+            elif x == len(grid[0])-1 and y == 0:
+                neighbors = grid[y][x-1] + grid[y+1][x-1] + grid[y+1][x]
+            elif x == len(grid[0])-1 and y == len(grid)-1:
+                neighbors = grid[y-1][x] + grid[y-1][x-1] + grid[y][x-1]
+            elif x == 0 and y == len(grid)-1:
+                neighbors = grid[y-1][x] + grid[y-1][x+1] + grid[y][x+1]
             elif y == 0:
-                continue
-            elif x == len(grid[0]):
-                continue
-            elif y == len(grid):
-                continue
+                neighbors = grid[y][x-1] + grid[y+1][x-1] + grid[y+1][x] + grid[y+1][x+1] + grid[y][x+1]
+            elif x == len(grid[0])-1:
+                neighbors = grid[y-1][x] + grid[y-1][x-1] + grid[y][x-1] + grid[y+1][x-1] + grid[y+1][x]
+            elif y == len(grid)-1:
+                neighbors = grid[y][x+1] + grid[y-1][x+1] + grid[y-1][x] + grid[y-1][x-1] + grid[y][x-1]
             elif x == 0:
-                continue
+                neighbors = grid[y+1][x] + grid[y+1][x+1] + grid[y][x+1] + grid[y-1][x+1] + grid[y-1][x]
             else:
-                continue
+                neighbors = grid[y-1][x-1] + grid[y-1][x] + grid[y-1][x+1] + grid[y][x+1] + grid[y+1][x+1] + grid[y+1][x] + grid[y+1][x-1] + grid[y][x-1]
 
-
-            if grid[y][x] == 1
+            if grid[y][x] == 1:
                 if neighbors == 2 or neighbors == 3:
                     new_row.append(1)
                 else:
@@ -55,6 +54,9 @@ def get_next(grid):
 
 def solve(grid, steps):
     for _ in range(steps):
+        # for row in grid:
+        #     print(row)
+        # print()
         grid = get_next(grid)
 
     ans1 = sum([sum(row) for row in grid])
@@ -73,7 +75,7 @@ def do_tests():
     grid = parse_file(lines)
     ans1, ans2 = solve(grid, 5)
 
-    assert ans1 == 21
+    assert ans1 == 4
     # assert ans2 == 3
     return True
 
