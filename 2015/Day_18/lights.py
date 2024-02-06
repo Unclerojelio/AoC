@@ -53,10 +53,7 @@ def get_next(grid):
     return next_grid
 
 def solve(grid, steps):
-    for _ in range(steps):
-        # for row in grid:
-        #     print(row)
-        # print()
+    for i in range(1, steps):
         grid = get_next(grid)
 
     ans1 = sum([sum(row) for row in grid])
@@ -88,8 +85,8 @@ def main():
     grid = parse_file(open(0).read().splitlines())
     ans1, ans2 = solve(grid, 101)
     
-    # assert ans1 == 654
-    # assert ans2 == 405
+    assert ans1 == 814
+    # assert ans2 == 
     print("Answer 1:", ans1, "Answer 2: ", ans2)
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
 
