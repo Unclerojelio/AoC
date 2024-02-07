@@ -18,8 +18,12 @@ def solve(replacements, starting_molecule):
     for replacement in replacements:
         positions = [i.start() for i in re.finditer(replacement[0], starting_molecule)]
         for position in positions:
-            # replace replacement[1] at position and add to molecules
-            pass
+            head = starting_molecule[:position]
+            if position + len(replacement[0]) >= len(starting_molecule):
+                tail = ''
+            else:
+                tail = starting_molecule[position+len(replacement[0]):]
+            molecules.add(head + replacement[1] + tail)
     answer = len(molecules)
     return answer
 
@@ -32,9 +36,20 @@ HOH'''
     lines = lines.splitlines()
     replacements, starting_molecule = parse_file(lines)
     ans1 = solve(replacements, starting_molecule)
-    #ans2 = solve()
+    assert ans1 == 4
 
-    assert ans1 == 0
+    lines = '''H => HO
+H => OH
+O => HH
+
+HOHOHO'''
+    lines = lines.splitlines()
+    replacements, starting_molecule = parse_file(lines)
+    ans1 = solve(replacements, starting_molecule)
+    assert ans1 == 7
+
+
+    #ans2 = solve()
     # assert ans2 == 
     return True
 
@@ -45,13 +60,11 @@ def main():
         print("Tests Passed")
 
     replacements, starting_molecule = parse_file(open(0).read().splitlines())
-    #print(replacements)
-    #ans1 = solve(replacements, starting_molecule)
+    ans1 = solve(replacements, starting_molecule)
     #ans2 = solve()
 
-    ans1 = 0
     ans2 = 0
-    assert ans1 == 0
+    assert ans1 == 518
     assert ans2 == 0 
     print("Answer 1:", ans1, "Answer 2: ", ans2)
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
