@@ -3,25 +3,20 @@ import re
 from itertools import combinations
 
 def solve():
-    answer = 0
-    return answer
 
-def do_tests():
-    ans1 = solve()
-    ans2 = solve()
+    house = 1
+    presents = 1
+    while presents <= 29000000:
+        house += 1
 
-    # assert ans1 == 4
-    # assert ans2 == 17
-    return True
+    return house
 
 def main():
     start_time = time.time()
     
-    if do_tests():
-        print("Tests Passed")
 
     ans1 = solve()
-    ans2 = solve()
+    #ans2 = solve()
     
     # assert ans1 == 814
     # assert ans2 == 924
