@@ -5,10 +5,14 @@ from itertools import combinations
 def solve():
 
     house = 1
-    presents = 1
+    presents = 0
+    elf = 1
     while presents <= 29000000:
+        presents += elf * 10
         house += 1
+        elf += 1
 
+    print(house, elf, presents)
     return house
 
 def main():
@@ -16,7 +20,7 @@ def main():
     
 
     ans1 = solve()
-    #ans2 = solve()
+    ans2 = 0
     
     # assert ans1 == 814
     # assert ans2 == 924
