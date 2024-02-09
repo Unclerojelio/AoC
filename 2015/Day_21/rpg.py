@@ -98,6 +98,7 @@ def main():
               'armor' : 2}
 
     wins = set()
+    losses = set()
     unique_combinations = find_unique_combinations(weapons, armors, rings)
     for combination in unique_combinations:
         cost = 0
@@ -127,9 +128,11 @@ def main():
         boss['health'] = 100
         if fight(player, boss):
             wins.add(cost)
+        else:
+            losses.add(cost)
 
     ans1 = min(wins)
-    ans2 = 0
+    ans2 = max(losses)
     assert ans1 == 91
     # assert ans2 == 0 
     print("Answer 1:", ans1, "Answer 2: ", ans2)
