@@ -134,7 +134,7 @@ def main():
     ans1 = min(wins)
     ans2 = max(losses)
     assert ans1 == 91
-    # assert ans2 == 0 
+    assert ans2 == 158 
     print("Answer 1:", ans1, "Answer 2: ", ans2)
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
 
