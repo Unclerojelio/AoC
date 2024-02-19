@@ -23,6 +23,19 @@ def test():
         print(f"{bcolors.FAIL}Test failed.{bcolors.ENDC}")
         return False
 
+def solve2(lines):
+    ans2 = [" ", " ", " ", " ", " ", " ", " ", " "]
+    found = []
+    i = 0
+    while len(found) < 8:
+        h = hashlib.md5(f"{lines}{i}".encode()).hexdigest()
+        if h.startswith("00000") and h[5] not in found and h[5].isdigit() and int(h[5]) < 8:
+            ans2[int(h[5])] = h[6]
+            found.append(h[5])
+            print("".join(ans2), end='\r')
+        i += 1
+    return ans2
+
 def solve(lines):
     ans1 = ""
     i = 0
@@ -41,6 +54,9 @@ def main():
         ans1 = solve(lines)
         assert ans1 == "f77a0e6e"
         print(f"Answer 1: {ans1}")
+        ans2 = solve2(lines)
+        ans2 = "".join(ans2)
+        print(f"Answer 2: {ans2}")
 
     end = time.time()
     print("Elapsed time:", (end-start) * 10**3, "ms")
