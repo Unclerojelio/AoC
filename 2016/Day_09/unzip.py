@@ -5,20 +5,24 @@ def do_tests():
     assert ans1 == 6
     ans1, ans2 = solve('A(1x5)BC')
     assert ans1 == 7
+    ans1, asn2 = solve('(3x3)XYZ')
+    assert ans1 == 9
+    ans1, ans2 = solve('(6x1)(1x3)A')
+    assert ans1 == 6
+    ans1, ans2 = solve('X(8x2)(3x3)ABCY')
+    assert ans1 == 18
     return True
-
 
 def solve(file):
     ans1 = 0
     ans2 = 0
     i = 0
-    output = ''
+    ans1 = 0
     f_iter = iter(file)
     c = next(f_iter)
     while c:
-        i += 1
         if c != '(':
-            output += c
+            ans1 += 1
             c = next(f_iter, False)
             continue
         group = ''
@@ -28,13 +32,10 @@ def solve(file):
             c = next(f_iter)
         c = next(f_iter) #discard closing paren
         x, y = group.split('x')
-        substr = ''
         for i in range(int(x)):
-            substr += c
             c = next(f_iter, False)
-        substr = substr * int(y)
-        output += substr
-    return len(output), ans2
+        ans1 += int(x) * int(y)
+    return ans1, ans2
 
 def main():
     start_time = time.time()
