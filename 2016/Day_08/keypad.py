@@ -23,7 +23,6 @@ def parse(line):
 
 
 def update(display, instruction):
-    #print(instruction)
     if instruction[0] == 'rect':
         for y in range(instruction[2]):
             x = instruction[1]
@@ -33,7 +32,7 @@ def update(display, instruction):
         x = instruction[1]
         for _ in range(instruction[2]):
             c = display[len(display)-1][x:x+1]
-            for y in range(1,len(display)):
+            for y in range(len(display) -1, 0, -1):
                 display[y] = display[y][:x] + display[y-1][x:x+1] + display[y][x+1:]
             display[0] = display[0][:x] + c + display[0][x+1:]
     else: #row
@@ -62,11 +61,10 @@ def main():
             if display[y][x] == '#':
                 ans1 += 1
 
-    for y in range(len(display)):
-        print(display[y])
+    # for y in range(len(display)):
+    #     print(display[y])
     
-    #249 too high
-    # assert ans1 == "umejzgdw"
+    assert ans1 == 121
     # assert ans2 == "aovueakv"
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
