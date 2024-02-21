@@ -10,7 +10,15 @@ def do_tests():
     return True
 
 def solve(lines):
-    ans1 = len(lines)
+    ans1 = 0
+    for line in lines:
+        wordset = set()
+        words = line.split()
+        for word in words:
+            wordset.add(word)
+        if len(wordset) == len(words):
+            ans1 += 1
+
     ans2 = 0
     return ans1, ans2
 
@@ -26,7 +34,7 @@ def main():
     lines = open(0).read().splitlines()
     ans1, ans2 = solve(lines)
     
-    # assert ans1 == 121
+    assert ans1 == 466
     # assert ans2 == "aovueakv"
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
