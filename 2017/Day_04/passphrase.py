@@ -1,4 +1,5 @@
 import time
+from itertools import permutations
 
 def do_tests():
     lines = ''''''
@@ -11,6 +12,7 @@ def do_tests():
 
 def solve(lines):
     ans1 = 0
+    ans2 = 0
     for line in lines:
         wordset = set()
         words = line.split()
@@ -19,7 +21,20 @@ def solve(lines):
         if len(wordset) == len(words):
             ans1 += 1
 
-    ans2 = 0
+        word = words[:1]
+        words = words[1:]
+        candidate = True
+        while len(words) > 0 and candidate:
+            for perm in list(permutations(word[0])):
+                word = ''.join(perm)
+                if word in words:
+                    candidate = False
+                    break
+            word = words[:1]
+            words = words[1:]
+        if candidate:
+            ans2 += 1
+
     return ans1, ans2
 
 def main():
@@ -28,14 +43,11 @@ def main():
     # if do_tests():
     #     print("Tests Passed")
 
-    ans1 = 0
-    ans2 = 0
-
     lines = open(0).read().splitlines()
     ans1, ans2 = solve(lines)
     
     assert ans1 == 466
-    # assert ans2 == "aovueakv"
+    assert ans2 == 251
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
