@@ -35,17 +35,30 @@ def parse(lines):
         pos = name.find('(')
         weight = int(name[pos+1:-1])
         name = name[:pos-1]
-        programs[name] = (weight, children)
+        programs[name] = [weight, children]
     return programs
     
 
 def solve(lines):
-    ans1 = 0
     ans2 = 0
     programs = parse(lines)
-    for program in programs:
-        print(program, programs[program])
 
+    while len(programs) > 1:
+        leaves = {}
+        for program in programs:
+            if programs[program][1] == []:
+                leaves[program] = programs[program][0]
+        for leaf in leaves:
+            del programs[leaf]
+        while len(leaves) > 0:
+            for program in programs:
+                for child in programs[program][1]:
+                    if child in leaves:
+                        programs[program][0] += leaves[child]
+                        programs[program][1].remove(child)
+                        del leaves[child]
+
+    ans1 = list(programs.keys())[0]
     return ans1, ans2
 
 def main():
@@ -57,7 +70,7 @@ def main():
     lines = open(0).read().splitlines()
     ans1, ans2 = solve(lines)
     
-    # assert ans1 == 12841
+    assert ans1 == 'rqwgj'
     # assert ans2 == 8038
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
