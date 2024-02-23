@@ -1,4 +1,5 @@
 import time
+from collections import defaultdict
 
 def do_tests():
     lines = '''pbga (66)
@@ -20,6 +21,18 @@ cntj (57)'''
     assert ans1 == 'tknk'
     #assert ans2 == 4
     return True
+
+def dfs(children, weights, root):
+    exp = None
+    s = weights[root]
+    for child in children[root]:
+        w = dfs(children, weights, child)
+        s += w
+        if exp is None:
+            exp = w
+        elif exp != w:
+            print('expected child ', child, weights[child], ' to have weight ', exp, ' has weight ', w)
+    return s
 
 def parse(lines):
     programs = {}
@@ -43,22 +56,21 @@ def solve(lines):
     ans2 = 0
     programs = parse(lines)
 
-    while len(programs) > 1:
-        leaves = {}
-        for program in programs:
-            if programs[program][1] == []:
-                leaves[program] = programs[program][0]
-        for leaf in leaves:
-            del programs[leaf]
-        while len(leaves) > 0:
-            for program in programs:
-                for child in programs[program][1]:
-                    if child in leaves:
-                        programs[program][0] += leaves[child]
-                        programs[program][1].remove(child)
-                        del leaves[child]
+    leaves = set()
+    children = defaultdict(list)
+    weights = {}
+    for program in programs:
+        weights[program] = programs[program][0]
+        if programs[program][1] != []:
+            children[program] = programs[program][1]
+            for child in programs[program][1]:
+                leaves.add(child)
+    for program in programs:
+        if program not in leaves:
+            ans1 = program
 
-    ans1 = list(programs.keys())[0]
+    dfs(children, weights, ans1)
+
     return ans1, ans2
 
 def main():
