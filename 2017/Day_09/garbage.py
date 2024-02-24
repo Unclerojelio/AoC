@@ -33,14 +33,35 @@ def solve(line):
     ans2 = 0
     stack = []
     score = 0
+    garbage = False
     for ch in line:
-        if ch == '{':
+        print(ans1, ch, stack)
+        if ch == '{' and not garbage:
             score += 1
             stack.append(ch)
-        elif ch == '}':
+        elif ch == '<' and not garbage:
+            stack.append(ch)
+            garbage = True
+        elif ch == '!' and garbage:
+            if stack[-1] != '!':
+                stack.append(ch)
+            else:
+                stack.pop()
+        elif ch == '>' and garbage:
+            if stack[-1] != '!':
+                ch = stack.pop()
+                while ch != '<':
+                    ch = stack.pop()
+                garbage = False
+            else:
+                stack.pop()
+        elif ch == '}' and not garbage:
+            ch = stack.pop()
+            while ch != '{':
+                ch = stack.pop()
             ans1 += score
             score -= 1
-    print(ans1)
+    print(ans1, stack)
     return ans1, ans2
 
 
@@ -51,7 +72,7 @@ def main():
         print("Tests Passed")
 
     line = open(0).read()
-    ans1, ans2 = solve(line)
+    #ans1, ans2 = solve(line)
     
     # assert ans1 == 12841
     # assert ans2 == 8038
