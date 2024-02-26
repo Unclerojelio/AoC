@@ -25,6 +25,27 @@ def do_tests():
     line = '''{{<a!>},{<a!>},{<a!>},{<ab>}}'''
     ans1, ans2 = solve(line)
     assert ans1 == 3
+    line = '''<>'''
+    ans1, ans2 = solve(line)
+    assert ans1 == 0
+    line = '''<random characters>'''
+    ans1, ans2 = solve(line)
+    assert ans1 == 0
+    line = '''<<<<>'''
+    ans1, ans2 = solve(line)
+    assert ans1 == 0
+    line = '''<{!>}>'''
+    ans1, ans2 = solve(line)
+    assert ans1 == 0
+    line = '''<!!>'''
+    ans1, ans2 = solve(line)
+    assert ans1 == 0
+    line = '''<!!!>>'''
+    ans1, ans2 = solve(line)
+    assert ans1 == 0
+    line = '''<{o"i!a,<{i<a>'''
+    ans1, ans2 = solve(line)
+    assert ans1 == 0
     # assert ans2 == 4
     return True
 
@@ -34,8 +55,10 @@ def solve(line):
     stack = []
     score = 0
     garbage = False
+    count = 0
     for ch in line:
-        print(ans1, ch, stack)
+        count += 1
+        print(count, ans1, ch, stack)
         if ch == '{' and not garbage:
             score += 1
             stack.append(ch)
@@ -49,19 +72,21 @@ def solve(line):
                 stack.pop()
         elif ch == '>' and garbage:
             if stack[-1] != '!':
-                ch = stack.pop()
-                while ch != '<':
-                    ch = stack.pop()
+                c = stack.pop()
+                while c != '<':
+                    c = stack.pop()
                 garbage = False
             else:
                 stack.pop()
         elif ch == '}' and not garbage:
-            ch = stack.pop()
-            while ch != '{':
-                ch = stack.pop()
+            c = stack.pop()
+            while c != '{':
+                c = stack.pop()
             ans1 += score
             score -= 1
-    print(ans1, stack)
+        elif ch != '<' and garbage:
+            stack.append(ch)
+    #print(ans1, stack)
     return ans1, ans2
 
 
@@ -71,9 +96,12 @@ def main():
     if do_tests():
         print("Tests Passed")
 
-    line = open(0).read()
-    #ans1, ans2 = solve(line)
+    line = open(0).read().strip()
+    ans1, ans2 = solve(line)
     
+    #7755 is too low
+    #made it to char 12240
+    #22330 chars in file
     # assert ans1 == 12841
     # assert ans2 == 8038
     print("Answer 1:", ans1, "Answer 2: ", ans2)
