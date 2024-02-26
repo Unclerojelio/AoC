@@ -46,6 +46,9 @@ def do_tests():
     line = '''<{o"i!a,<{i<a>'''
     ans1, ans2 = solve(line)
     assert ans1 == 0
+    line = '''<'oa!!<,'!!"!!!!!>!!!!!>>'''
+    ans1, ans2 = solve(line)
+    assert ans1 == 0
     # assert ans2 == 4
     return True
 
@@ -59,34 +62,36 @@ def solve(line):
     for ch in line:
         count += 1
         print(count, ans1, ch, stack)
-        if ch == '{' and not garbage:
-            score += 1
-            stack.append(ch)
-        elif ch == '<' and not garbage:
-            stack.append(ch)
-            garbage = True
-        elif ch == '!' and garbage:
-            if stack[-1] != '!':
+        if not garbage:
+            if ch == '{':
+                score += 1
                 stack.append(ch)
-            else:
-                stack.pop()
-        elif ch == '>' and garbage:
-            if stack[-1] != '!':
+            elif ch == '<':
+                stack.append(ch)
+                garbage = True
+            elif ch == '}':
                 c = stack.pop()
-                while c != '<':
+                while c != '{':
                     c = stack.pop()
-                garbage = False
-            else:
-                stack.pop()
-        elif ch == '}' and not garbage:
-            c = stack.pop()
-            while c != '{':
-                c = stack.pop()
-            ans1 += score
-            score -= 1
-        elif ch != '<' and garbage:
-            stack.append(ch)
-    #print(ans1, stack)
+                ans1 += score
+                score -= 1
+        else: # garbage
+            if ch == '!':
+                if stack[-1] != '!':
+                    stack.append(ch)
+                else:
+                    stack.pop()
+            elif ch == '>':
+                if stack[-1] != '!':
+                    c = stack.pop()
+                    while c != '<':
+                        c = stack.pop()
+                    garbage = False
+                else:
+                    stack.pop()
+            elif ch != '<':
+                stack.append(ch)
+    print(stack)
     return ans1, ans2
 
 
