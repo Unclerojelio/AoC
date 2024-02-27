@@ -4,7 +4,7 @@ def do_tests():
     num_elements = 5
     line = [3, 4, 1, 5]
     ans1, ans2 = solve(line, num_elements)
-    assert ans1 == 0
+    assert ans1 == 12
     #assert ans2 == 10
     return True
 
@@ -12,22 +12,24 @@ def solve(line, num_elements):
     skip = 0
     position = 0
     elements = list(range(num_elements))
-    print(elements)
+    #print(elements)
     for length in line:
-        if position + length  < num_elements:
+        if position + length  <= num_elements:
             substr = elements[position:position + length]
             substr = substr[::-1]
             elements = elements[:position] + substr + elements[position + length:]
-            print(substr, elements)
+            #print(substr, elements)
         else:
-            substr = elements[position:] + elements[:(position + length) % num_elements]
+            substr = elements[position:] + elements[:(position + length) - num_elements]
             substr = substr[::-1]
-            print(substr[length - num_elements - 1:], elements[position - 1: (position + length) % num_elements + 1], substr[:length - num_elements - 1], position, length)
-            elements = substr[length - num_elements - 1:] + elements[position - 1: (position + length) % num_elements + 1] + substr[:length - num_elements - 1]
-            print(substr, elements)
+            #print(substr[num_elements - length + 1:], elements[position + length - num_elements: position], substr[:num_elements - position], position, length)
+            elements = substr[num_elements - position:] + elements[position + length - num_elements: position] + substr[:num_elements - position]
+            #print(substr, elements)
         position = (position + length + skip) % num_elements
         skip += 1
         #print(length, position, skip)
+        #print(elements)
+        assert len(elements) == num_elements
 
     ans1 = elements[0] * elements[1]
     ans2 = 0
@@ -42,9 +44,9 @@ def main():
 
     line = [int(x) for x in open(0).read().strip().split(',')]
     num_elements = 256
-    #ans1, ans2 = solve(line, num_elements)
+    ans1, ans2 = solve(line, num_elements)
     
-    #assert ans1 == 16869
+    assert ans1 == 212
     #assert ans2 == 7284
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
