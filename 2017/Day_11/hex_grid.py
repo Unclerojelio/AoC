@@ -1,3 +1,5 @@
+# Axial coordinates and distance from: https://www.redblobgames.com/grids/hexagons/
+
 import time
 
 def do_tests():
