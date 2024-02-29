@@ -9,6 +9,7 @@ def do_tests():
     firewall = parse(lines.splitlines())
     ans1, ans2 = solve(firewall)
     assert ans1 == 24
+    assert ans2 == 10
     return True
 
 def final_index(length, n):
@@ -23,7 +24,7 @@ def final_index(length, n):
     return length - remainder - 1
 
 def parse(lines):
-    firewall = defaultdict(int)
+    firewall = {}
     for line in lines:
         layer, rng = line.split(': ')
         firewall[int(layer)] = int(rng)
@@ -31,10 +32,20 @@ def parse(lines):
 
 def solve(firewall):
     ans1, ans2 = 0,0
-    for i in range(max(firewall.keys())+1):
-        if final_index(firewall[i], i) == 0:
-            ans1 += firewall[i] * i 
-    return ans1, ans2
+    for layer in firewall:
+        if final_index(firewall[layer], layer) == 0:
+            ans1 += firewall[layer] * layer
+
+    free_path = False
+    while not free_path:
+        free_path = True
+        for layer in firewall:
+            if final_index(firewall[layer], layer + ans2) == 0:
+                free_path = False
+                break
+        ans2 += 1
+
+    return ans1, ans2 - 1
 
 def main():
     start_time = time.time()
@@ -47,7 +58,7 @@ def main():
     ans1, ans2 = solve(firewall)
     
     assert ans1 == 1900
-    # assert ans2 == 211
+    assert ans2 == 3966414
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
