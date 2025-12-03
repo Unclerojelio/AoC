@@ -18,7 +18,8 @@ def parse(line):
 def solve(ranges):
     for range in ranges:
         start, end = range.split("-")
-        print(start, end)
+        if (len(start) % 2 == 0) and (len(end) % 2 == 0):
+            print(start, end)
     return 0, 0
 
 def main():
