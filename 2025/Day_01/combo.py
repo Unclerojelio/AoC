@@ -36,24 +36,26 @@ def solve(moves):
     combo = 0
     passes = 0
     for move in moves:
-        print(current, passes)
+        # print(current, passes)
         direction = move[0]
         distance = int(move[1:])
-        passes = passes + distance // 100
+        if distance > 100:
+            passes += distance // 100
+            distance = distance % 100
         if direction == 'L':
             if (current - distance < 0) and (current != 0):
                 passes += 1
             current = (current - distance) % 100
 
         else:
-            if (current + distance > 100):
+            if (current + distance > 100) and (current != 0):
                 passes += 1
             current = (current + distance) % 100
 
         if current == 0:
             combo += 1
-    print(current, passes)
-    print(combo, combo + passes)
+    # print(current, passes)
+    # print(combo, combo + passes)
     return combo, combo + passes
 
 def main():
@@ -66,7 +68,7 @@ def main():
     # left_nums, right_nums = parse(lines)
     ans1, ans2 = solve(moves)
     assert ans1 == 1172
-    #assert ans2 == 7507 too high
+    assert ans2 == 6932
     print("Answer 1:", ans1, "Answer 2: ", ans2)
 
     print("Elapsed time:", (time.time() - start_time) * 10**3, "ms")
